@@ -1,5 +1,7 @@
-DATASET_PATH = "TreeFullImages/"
+DATASET_PATH = "C:/Users/drewk/OneDrive/Desktop/CS Projects/TreeFullImages/"
 LOG_PATH = "saved_models/"
+OLD_MODEL = "saved_models/model_52.pth"
+NEW_MODEL = "saved_models/model_53.pth"
 
 N_EPOCHS = 1
 N_CLASSES = 23
@@ -21,9 +23,3 @@ TREE_SIZE = 0.2
 INCLUDE_IGNORE = False
 EXISTING_DATASET = "dataset.txt"
 
-USE_MULTITASK = False
-PRETRAINED = True
-
-K_FOLD = 1
-PRINT = True
-SAVE_GRAPH = True

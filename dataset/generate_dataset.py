@@ -3,6 +3,7 @@ import os
 import math
 import hyperparameters as hp
 from PIL import Image
+import torch
 import random
 
 class GenerateDataset:
@@ -84,6 +85,8 @@ class GenerateDataset:
         dataset = self.get_dataset(split)
         self.train = dataset['train']
         self.test = dataset['test']
+        with open("dataset.txt", "w", encoding= "utf-8") as f:
+            json.dump(dataset, f, ensure_ascii= True)
 
     def get_train(self):
         return self.train

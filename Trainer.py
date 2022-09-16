@@ -9,16 +9,15 @@ from time import time
 import os
 
 class Trainer():
-    def __init__(self, batch_size=32, lr=0.01, epoch_lr=None, lr_decay=0., weight_decay=0., n_classes=23):
+    def __init__(self):
         super().__init__()
 
-    def create_model(self, model_name='resnet50'):
+    def create_model(self, model_name = hp.MODEL):
         self.criterion = nn.CrossEntropyLoss()
 
         self.net = Model(model_name, n_classes=hp.N_CLASSES)
         if (hp.PRETRAINED == True):
-            self.net.load_state_dict(torch.load("saved_models/model_51.pth"))
-        #self.net.cuda()
+            self.net.load_state_dict(torch.load(hp.OLD_MODEL))
 
         self.freeze_layers(1)
 
@@ -98,7 +97,7 @@ class Trainer():
             current_lr = self.update_lr(i, current_lr)
 
     def save_train_data(self):
-        torch.save(self.net.state_dict(), os.path.join(hp.LOG_PATH, "model_52.pth"))
+        torch.save(self.net.state_dict(), hp.NEW_MODEL)
 
     def update_epoch_info(self, epoch, n_epoch, lr, loss, acc, epoch_time, print_info=True):
         if print_info:
