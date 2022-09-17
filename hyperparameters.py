@@ -1,4 +1,4 @@
-DATASET_PATH = "C:/Users/drewk/OneDrive/Desktop/CS Projects/TreeFullImages/"
+DATASET_PATH = "C:/Users/drewk/OneDrive/Desktop/CS Projects/images/"
 LOG_PATH = "saved_models/"
 OLD_MODEL = "saved_models/model_52.pth"
 NEW_MODEL = "saved_models/model_53.pth"
