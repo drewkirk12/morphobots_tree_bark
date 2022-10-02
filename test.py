@@ -22,14 +22,19 @@ class Test:
         data_loader = enumerate(loader)
         running_acc = 0
         total = 0
+        pred_list = []
         for j in range(len(loader)):
             batch_input, targets = self.create_mini_batch(data_loader)
             output = self.net(batch_input)
-            predictions = output.max(1)[1].type_as(targets)
-            correct = predictions.eq(targets).sum()
-
-            total += output.size(0)
-            running_acc += correct.item()
+            predictions = output.max(1)[1]
+            pred_list.append(predictions)
+            if(hp.HAS_LABELS == True):
+                correct = predictions.eq(targets).sum()
+                total += output.size(0)
+                running_acc += correct.item()
+        if(hp.PREDICTION_PATH != None):
+            with open(hp.PREDICTION_PATH, 'w') as filehandle:
+                json.dump(pred_list.toList(), filehandle)
         return running_acc/total
 
     def get_loader(self, folder):
@@ -69,8 +74,8 @@ class Test:
         self.net.eval()
 
 def get_dataset_generator():
-        dataset_gen = GenerateDataset(hp.DATASET_PATH)
-        dataset_gen.load_dataset(hp.EXISTING_DATASET, float(hp.TRAIN_SPLIT))
+        dataset_gen = GenerateDataset(hp.IMAGE_PATH)
+        dataset_gen.load_new_dataset(float(1))
 
         if hp.INCLUDE_IGNORE == 'True':
             dataset_gen.add_ignore()
@@ -79,13 +84,18 @@ def get_dataset_generator():
 
 
 if __name__ == '__main__':
-    model = str(0)
-    
-    dataset_file = os.path.join(hp.EXISTING_DATASET)
-    dataset_file = open(dataset_file)
-    loaded_dataset = json.load(dataset_file)
-    dataset_file.close()
-
     test = Test()
-    test_acc = test.run(folder = loaded_dataset)
+    #tests on test images from original dataset
+    if(hp.EXISTING_DATASET != None):
+        dataset_file = os.path.join(hp.EXISTING_DATASET)
+        dataset_file = open(dataset_file)
+        loaded_dataset = json.load(dataset_file)
+        dataset_file.close()
+        test_acc = test.run(folder = loaded_dataset)
+    else:
+        dataset_generator = get_dataset_generator()
+        dataset = dataset_generator.all_dataset(train_size=float(hp.TRAIN_SIZE), tree_size=float(hp.TREE_SIZE))
+        dataset = {0: dataset}
+        test_acc = test.run(folder = dataset[0])
+    
     print("Test Accuracy: %d", test_acc * 100)

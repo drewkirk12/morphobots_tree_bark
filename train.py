@@ -7,7 +7,7 @@ from dataset.generate_dataset import GenerateDataset
 from Trainer import Trainer
 
 def get_dataset_generator():
-    dataset_gen = GenerateDataset(hp.DATASET_PATH)
+    dataset_gen = GenerateDataset(hp.IMAGE_PATH)
     dataset_gen.load_dataset(hp.EXISTING_DATASET, float(hp.TRAIN_SPLIT))
 
     if hp.INCLUDE_IGNORE == 'True':
@@ -27,6 +27,6 @@ if __name__ == '__main__':
     trainer = Trainer()
 
     trainer.train(n_epoch=int(hp.N_EPOCHS), folder=dataset[0], model_name=hp.MODEL,
-                    print_info=hp.PRINT == 'TRUE')
+                    print_info = 'TRUE')
 
     trainer.save_train_data()

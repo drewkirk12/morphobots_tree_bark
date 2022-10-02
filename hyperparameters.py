@@ -1,7 +1,9 @@
-DATASET_PATH = "C:/Users/drewk/OneDrive/Desktop/CS Projects/images/"
-LOG_PATH = "saved_models/"
+IMAGE_PATH = "C:/Users/drewk/OneDrive/Desktop/CS Projects/images/"
 OLD_MODEL = "saved_models/model_52.pth"
 NEW_MODEL = "saved_models/model_53.pth"
+
+HAS_LABELS = True
+PREDICTION_PATH = None
 
 N_EPOCHS = 1
 N_CLASSES = 23

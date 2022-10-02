@@ -11,7 +11,7 @@ class GenerateDataset:
     IGNORED = ['ERB', 'PEG', 'PID']
 
     def __init__(self, path):
-        self.path = hp.DATASET_PATH
+        self.path = hp.IMAGE_PATH
         self.trees = {}
         self.dataset = {}
         self.classes = []

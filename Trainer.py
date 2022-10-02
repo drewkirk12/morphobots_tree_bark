@@ -16,7 +16,7 @@ class Trainer():
         self.criterion = nn.CrossEntropyLoss()
 
         self.net = Model(model_name, n_classes=hp.N_CLASSES)
-        if (hp.PRETRAINED == True):
+        if (hp.OLD_MODEL != None):
             self.net.load_state_dict(torch.load(hp.OLD_MODEL))
 
         self.freeze_layers(1)
@@ -59,7 +59,7 @@ class Trainer():
         epoch_acc.append(acc)
         if print_info:
             print('\r', end='')
-            print('{} / {} - {:.4f} - {:.2f}%'.format(j + 1, len(loader), loss.data[0], acc), end='',
+            print('{} / {} - {:.4f} - {:.2f}%'.format(j + 1, len(loader), loss.item(), acc), end='',
                   flush=True)
 
         return epoch_acc
