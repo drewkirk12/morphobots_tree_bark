@@ -75,7 +75,7 @@ class Test:
 
 def get_dataset_generator():
         dataset_gen = GenerateDataset(hp.IMAGE_PATH)
-        dataset_gen.load_new_dataset(float(1))
+        dataset_gen.load_dataset(hp.EXISTING_DATASET, float(1- hp.TEST_SPLIT))
 
         if hp.INCLUDE_IGNORE == 'True':
             dataset_gen.add_ignore()
@@ -84,18 +84,13 @@ def get_dataset_generator():
 
 
 if __name__ == '__main__':
-    test = Test()
-    #tests on test images from original dataset
-    if(hp.EXISTING_DATASET != None):
-        dataset_file = os.path.join(hp.EXISTING_DATASET)
-        dataset_file = open(dataset_file)
-        loaded_dataset = json.load(dataset_file)
-        dataset_file.close()
-        test_acc = test.run(folder = loaded_dataset)
-    else:
-        dataset_generator = get_dataset_generator()
-        dataset = dataset_generator.all_dataset(train_size=float(hp.TRAIN_SIZE), tree_size=float(hp.TREE_SIZE))
-        dataset = {0: dataset}
-        test_acc = test.run(folder = dataset[0])
+    test = Test()  
+
+    dataset_generator = get_dataset_generator()
+
+    dataset = dataset_generator.all_dataset(train_size=float(hp.TRAIN_SIZE), tree_size=float(hp.TREE_SIZE))
+    dataset = {0: dataset}
+
+    test_acc = test.run(folder = dataset[0])
     
     print("Test Accuracy: %d", test_acc * 100)

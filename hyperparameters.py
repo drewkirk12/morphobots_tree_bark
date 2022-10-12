@@ -16,6 +16,7 @@ EPOCH_LIST = [20, 40, 60, 80]
 EPOCH_LR = None
 
 TRAIN_SPLIT = 0.75
+TEST_SPLIT = 0.25
 
 MODEL = "resnet34"
 
